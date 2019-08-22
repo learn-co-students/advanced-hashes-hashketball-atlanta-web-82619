@@ -1,8 +1,7 @@
- require "pry"
- 
-def game_hash 
-  {
-  home: {
+require "pry"
+ def game_hash
+
+  game_hash = {home: {
     team_name: "Brooklyn Nets",
     colors: ["Black", "White"],
     players: {"Alan Anderson" => {
@@ -109,20 +108,88 @@ def game_hash
                 blocks: 5,
                 slam_dunks: 12,
                 }}
-      }
+      } 
     }
 
 
 end
 
-def num_points_scored(player_name)
-  #return num of points for a player passed in 
-  game_hash.each do | place, team|
+def num_points_scored(players_name)
+  game_hash.each do |place, team|
     team.each do | attribute, data|
-      binding.pry
-    
-    
+    if attribute == :players
+      data.each do |player|
+        if player[:player_name] == players_name
+          return player[:points]
+        end
+end
+end
+end
+
+end
+end
+def team_colors(name_of_team)
+  game_hash.each do |team, chars|
+    game_hash[team].each do |name, chars|
+        if name_of_team == chars
+          return game_hash[team][:colors]
+        end
+    end
   end
 end
+
+def team_names
+  teams = []
+  game_hash.each do |team, chars|
+      teams.push(game_hash[team][:team_name])
+  end
+  return teams
 end
+
+def players_numbers(name_of_team)
+
+  numbers = []
+  game_hash.each do |team, chars|
+    if name_of_team == game_hash[team][:team_name]
+      game_hash[team][:players].each do |name, stats|
+        numbers.push(stats[:number])
+      end
+    end
+  end
+  return numbers
   
+end
+
+def big_shoe_rebounds
+  names = []
+  shoe_sizes = []
+
+  game_hash.each do |team, chars|
+    game_hash[team][:players].each do |name,stats|
+      names.push(name)
+      shoe_sizes.push(stats[:shoe])
+    end
+  end
+
+  largest = -1
+  shoe_sizes.each do |x|
+    if x > largest
+      largest = x
+    end
+  end
+  
+  player_with_largest = names[shoe_sizes.index(largest)]
+  
+  game_hash.each do |team, chars|
+    game_hash[team][:players].each do |name, stats|
+     if player_with_largest == name
+       return stats[:rebounds]
+  
+      end
+    end
+  end
+end
+
+big_shoe_rebounds
+
+
